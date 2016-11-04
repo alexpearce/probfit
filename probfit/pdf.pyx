@@ -209,13 +209,14 @@ cpdef double crystalball(double x, double alpha, double n, double mean, double s
         ret = badvalue
     else:
         d = (x-mean)/sigma
-        if d > -alpha :
+        if (alpha > 0 and d > -alpha) or (alpha < 0 and d < -alpha):
             ret = exp(-0.5*d**2)
         else:
             al = fabs(alpha)
+            asign = np.sign(alpha)
             A=pow(n/al,n)*exp(-al**2/2.)
             B=n/al-al
-            ret = A*pow(B-d,-n)
+            ret = A*pow(B-d*asign,-n)
     return ret
 
 
